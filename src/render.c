@@ -2,17 +2,13 @@
 #include "core_game.h"
 #include "render.h"
 
-void new_game();
-
 void render() {
-  Core_game *game = get_game_core();
-
-  if(!game->input_is_valid) {
+  if(!is_input_valid()) {
     printf("Opção inválida. Tente novamente.\n");
     return;
   }
 
-  switch(game->interface) {
+  switch(get_interface()) {
     case INTERFACE_MENU:
       menu_interface();
     break;
@@ -25,7 +21,6 @@ void render() {
       printf("Fim do jogo.\n");
     return;
   }
-
 }
 
 void menu_interface() {

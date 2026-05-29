@@ -1,37 +1,36 @@
 #include <stdlib.h>
 #include "core_game.h"
 
-int validate_input(Core_game *game) {
+int validate_input() {
   char *tmp;
-  int input = strtol(game->input_msg, &tmp, 10);
-  game->input_is_valid = true;
+  const char* msg = get_input_msg();
+  int input = strtol(msg, &tmp, 10);
+  set_input_valid(true);
   
-  if(tmp == game->input_msg || *tmp != '\0') {
-    game->input_is_valid = false;
+  if(tmp == msg || *tmp != '\0') {
+    set_input_valid(false);
     return 0;
   }
   
-  game->input = input;
+  set_input(input);
   return 1;
 }
 
 void update() {
-  Core_game *game = get_game_core();
-
-  if(!validate_input(game))
+  if(!validate_input())
     return;
 
-  switch(game->input) {
+  switch(get_input()) {
     case 0:
-      game->game_state = GAME_STATE_OVER;
-      game->interface = INTERFACE_END;
+      set_game_state(GAME_STATE_OVER);
+      set_interface(INTERFACE_END);
     break;
 
     case 1:
-      game->interface = INTERFACE_NEW_GAME;
+      set_interface(INTERFACE_NEW_GAME);
     break;
 
     default:
-      game->input_is_valid = false;
+      set_input_valid(false);
   }
 }
