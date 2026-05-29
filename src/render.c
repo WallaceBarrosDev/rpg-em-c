@@ -20,7 +20,7 @@ void render() {
     break;
 
     case INTERFACE_END:
-      printf("Fim do jogo.\n");
+      printf("Fim do jogo ...\n");
     return;
   }
 }
