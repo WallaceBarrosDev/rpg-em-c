@@ -25,7 +25,12 @@ void update() {
     case 0:
       game->game_state = GAME_STATE_OVER;
       game->interface = INTERFACE_END;
-      break;
+    break;
+
+    case 1:
+      game->interface = INTERFACE_NEW_GAME;
+    break;
+
     default:
       game->input_is_valid = false;
   }

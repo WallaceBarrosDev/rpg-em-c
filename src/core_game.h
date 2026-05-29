@@ -2,16 +2,12 @@
 #define CORE_GAME_H
 
 #include <stdbool.h>
+#include "render.h"
 
 typedef enum {
   GAME_STATE_RUNNING,
   GAME_STATE_OVER
 } Game_state;
-
-typedef enum {
-  INTERFACE_MENU,
-  INTERFACE_END
-} Interface;
 
 typedef struct {
   char input_msg[254];
