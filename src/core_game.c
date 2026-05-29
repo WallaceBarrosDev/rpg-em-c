@@ -18,7 +18,7 @@ Core_game *get_game_core() {
 
 void game_end() {
   free(game);
-  game = NULL; // evitar dangling pointer
+  game = NULL;
 }
 
 Game_state get_game_state() {
@@ -29,14 +29,12 @@ void set_game_state(Game_state state) {
   game->game_state = state;
 }
 
-// Implementação das novas funções
-
 Interface get_interface() {
   return game->interface;
 }
 
-void set_interface(Interface iface) {
-  game->interface = iface;
+void set_interface(Interface interface) {
+  game->interface = interface;
 }
 
 bool is_input_valid() {

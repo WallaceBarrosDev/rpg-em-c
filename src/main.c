@@ -6,7 +6,8 @@
 int main() {
   game_init();
 
-  render(); // exibe o menu inicial
+  menu_interface();
+
   while(get_game_state() == GAME_STATE_RUNNING) {
     input();
     update();
