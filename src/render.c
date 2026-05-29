@@ -2,8 +2,6 @@
 #include "core_game.h"
 #include "render.h"
 
-void new_game();
-
 void render() {
   if(!is_input_valid()) {
     printf("Opção inválida. Tente novamente.\n");
