@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "core_game.h"
 
-int validade_input(Core_game *game) {
+int validate_input(Core_game *game) {
   char *tmp;
   int input = strtol(game->input_msg, &tmp, 10);
   game->input_is_valid = true;
@@ -18,7 +18,7 @@ int validade_input(Core_game *game) {
 void update() {
   Core_game *game = get_game_core();
 
-  if(!validade_input(game))
+  if(!validate_input(game))
     return;
 
   switch(game->input) {
