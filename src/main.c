@@ -14,10 +14,9 @@ void dungeon() {
   printf("Selecione uma opção,\n");
   printf("1, Explorar.\n2, Sair.\n");
   
-  int option = get_input();
-
-  switch (option) {
+  switch (get_input()) {
     case -1:
+      printf("Abrindo menu ...\n");
     return;
 
     case 1:
@@ -44,11 +43,10 @@ void menu() {
   } else {
     printf("1, Novo jogo.\n2, Sair.\n");
   } 
-  
-  int option = get_input();
 
-  switch (option) {
+  switch (get_input()) {
     case -1:
+      printf("Abrindo menu ...\n");
     return;
 
     case 1:
