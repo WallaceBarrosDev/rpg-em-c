@@ -12,8 +12,8 @@ void init_combat(Entities *new_enimies) {
 void end_combat() {
   destroy_entities(enimies);
   combat_running = false;
-  game_set_screen(MENU);
-  game_stop();
+  game_set_screen(SCREEN_MENU);
+  game_end_session();
 }
 
 bool combat_is_running() {

@@ -4,22 +4,23 @@ Game *game = NULL;
 
 void game_init() {
   game = malloc(sizeof(Game));
-  game->screen = MENU;
+  game->current_screen = SCREEN_MENU;
+  game->previous_screen = SCREEN_MENU;
   game->is_running = true;
-  game->is_play = false;
+  game->has_saved_game = false;
 }
 
-void game_set_screen(Screens screen) {
-  game->pause_screen = game->screen;
-  game->screen = screen;
+void game_set_screen(ScreenType screen) {
+  game->previous_screen = game->current_screen;
+  game->current_screen = screen;
 }
 
-Screens game_get_screen() {
-  return game->screen;
+ScreenType game_get_current_screen() {
+  return game->current_screen;
 }
 
-Screens game_get_pause_screen() {
-  return game->pause_screen;
+ScreenType game_get_previous_screen() {
+  return game->previous_screen;
 }
 
 void game_end() {
@@ -30,18 +31,17 @@ bool game_is_running() {
   return game->is_running;
 }
 
-void game_play() {
-  game->is_play = true;
+void game_start_new() {
+  game->has_saved_game = true;
 }
 
-void game_stop() {
-  game->is_play = false;
+void game_end_session() {
+  game->has_saved_game = false;
 }
 
-bool game_is_play() {
-  return game->is_play;
+bool game_has_saved_game() {
+  return game->has_saved_game;
 }
-
 
 void game_free() {
   free(game);

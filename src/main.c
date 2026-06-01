@@ -7,105 +7,124 @@
 #include "get_input.h"
 #include "combat.h"
 
-/* interfaces */
+/* --- Interfaces de Tela (Screen Handlers) --- */
 
-void dungeon() {
+// Processa comandos de texto (ex: "menu", "inventario")
+void process_command(const char* command) {
+  if (strcmp(command, "menu") == 0) {
+    game_set_screen(SCREEN_MENU);
+  }
+  // Adicionar novos comandos aqui no futuro (ex: "inventario", "ajuda")
+}
+
+// Tela: Masmorra (Dungeon)
+void screen_dungeon() {
   printf("Você entrou na dungeon!\n");
-  printf("Selecione uma opção,\n");
-  printf("1, Explorar.\n2, Sair.\n");
-  
-  switch (get_input()) {
-    case -1:
-      printf("Abrindo menu ...\n");
-    return;
+  printf("Selecione uma opção:\n");
+  printf("1. Explorar\n2. Sair\n");
 
+  InputData input = get_input();
+
+  // Verifica se é um comando textual
+  if (!input.is_number) {
+    process_command(input.command);
+    return;
+  }
+
+  switch (input.value) {
     case 1:
       printf("Explorando...\n");
-    break;
-    
+      // TODO: Implementar lógica de exploração
+      break;
+
     case 2:
-      printf("Saindo...\n");
-      game_set_screen(MENU);
-      game_stop();
-    return;
-    
+      printf("Saindo da masmorra...\n");
+      game_set_screen(SCREEN_MENU);
+      game_end_session(); // Reseta estado do jogo ao sair
+      return;
+
     default:
       printf("Opção inválida!\n");
-    break;
+      break;
   }
 }
 
-void menu() {
-  printf("Menu Principal!\n");
-  printf("Selecione uma opção,\n");
-  if(game_is_play()) {
-    printf("1, Continuar jogo.\n2, Sair.\n");
+// Tela: Menu Principal
+void screen_menu() {
+  printf("Menu Principal\n");
+  printf("Selecione uma opção:\n");
+
+  if (game_has_saved_game()) {
+    printf("1. Continuar jogo\n2. Sair\n");
   } else {
-    printf("1, Novo jogo.\n2, Sair.\n");
-  } 
+    printf("1. Novo jogo\n2. Sair\n");
+  }
 
-  switch (get_input()) {
-    case -1:
-      printf("Abrindo menu ...\n");
+  InputData input = get_input();
+
+  // Verifica se é um comando textual
+  if (!input.is_number) {
+    process_command(input.command);
     return;
+  }
 
+  switch (input.value) {
     case 1:
-      if(game_is_play()) {
+      if (game_has_saved_game()) {
         printf("Jogo carregado!\n");
-        game_play();
-        game_set_screen(game_get_pause_screen());
+        // Retoma jogo existente
+        game_set_screen(game_get_previous_screen());
         return;
       }
 
-      printf("Novo jogo!\n");
-      game_play();
-      game_set_screen(COMBAT);
-    break;
-    
+      printf("Iniciando novo jogo...\n");
+      game_start_new();
+      game_set_screen(SCREEN_COMBAT);
+      break;
+
     case 2:
-      printf("Saindo...\n");
+      printf("Saindo do jogo...\n");
       game_end();
-    return;
-    
+      return;
+
     default:
       printf("Opção inválida!\n");
-    break;
+      break;
   }
 }
 
-void menu_combat() {
-  printf("combate.\n");
+// Tela: Combate
+void screen_combat() {
+  printf("Combate\n");
   show_player_stats();
-  printf("inimigos.\n");
+  printf("Inimigos:\n");
   show_enimies();
   next_turn();
 }
 
-/* render */
+/* --- Renderizador Principal --- */
 
 void render() {
-  switch (game_get_screen()) {
-    case MENU:
-      menu();
-    break;
-    
-    case DUNGEON:
-      dungeon();
-    break;
+  switch (game_get_current_screen()) {
+    case SCREEN_MENU:
+      screen_menu();
+      break;
 
-    case COMBAT:
-      if(get_input() == -1) {
-        break;        
-      };
-      if(!combat_is_running()) {
+    case SCREEN_DUNGEON:
+      screen_dungeon();
+      break;
+
+    case SCREEN_COMBAT:
+      // Inicia combate se não estiver rodando
+      if (!combat_is_running()) {
         Entity *zombie = create_entity("zombie", 100, 10);
         Entities *entities = create_entities(1);
         add_new_entity(entities, zombie);
-        
+
         init_combat(entities);
       }
-      menu_combat();
-    break;
+      screen_combat();
+      break;
   }
   printf("\n");
 }
