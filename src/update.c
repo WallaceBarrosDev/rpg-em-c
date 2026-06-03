@@ -1,10 +1,14 @@
 #include "update.h"
+#include "game.h"
+#include "render.h"
+#include <strings.h>
 
 void update() {
   InputData inputData = get_input();
 
   if (!inputData.is_number) {
     process_command(inputData.command);
+    return;
   }
 
   switch (game_get_current_screen()) {
@@ -12,8 +16,12 @@ void update() {
       update_menu(inputData.value);
       break;
 
+    case SCREEN_PAUSE_MENU:
+      update_pause_menu(inputData.value);
+      break;
+
     case SCREEN_DUNGEON:
-      // TODO: Implementar lógica de exploração
+      update_dungeon(inputData.value);
       break;
 
     case SCREEN_COMBAT:
@@ -23,8 +31,16 @@ void update() {
 
 }
 
+bool command_is_equals(const char* command, const char* option, ScreenType screen) {
+  return strcasecmp(command, option) == 0 && game_get_current_screen() != screen;
+}
+
 void process_command(const char* command) {
-  if (strcmp(command, "menu") == 0) {
+  if (command_is_equals(command, "menu", SCREEN_MENU)) {
+    if(game_session_is_run()) {
+      game_set_screen(SCREEN_PAUSE_MENU);
+      return;
+    }
     game_set_screen(SCREEN_MENU);
   }
   // Adicionar novos comandos aqui no futuro (ex: "inventario", "ajuda")
@@ -33,15 +49,47 @@ void process_command(const char* command) {
 void update_menu(int value) {
   switch (value) {
     case 1:
-      printf("embreve ...\n");
+      game_start_new();
+      game_set_screen(SCREEN_DUNGEON);
       break;
 
     case 2:
       game_end();
+      render_end_game();
       break;
 
     default:
-      printf("Opção inválida!\n");
+      render_invalide_option();
+      break;
+  }
+}
+
+void update_pause_menu(int value) {
+  switch (value) {
+    case 1:
+      game_set_screen(game_get_previous_screen());
+      break;
+
+    case 2:
+      game_end_session();
+      game_end();
+      render_end_game();
+      break;
+  }
+}
+
+void update_dungeon(int value) {
+  switch (value) {
+    case 1:
+      game_set_screen(SCREEN_COMBAT);
+      break;
+
+    case 2:
+      game_set_screen(SCREEN_MENU);
+      break;
+
+    default:
+      render_invalide_option();
       break;
   }
 }

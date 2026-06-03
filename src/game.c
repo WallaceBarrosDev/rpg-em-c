@@ -7,7 +7,7 @@ void game_init() {
   game->current_screen = SCREEN_MENU;
   game->previous_screen = SCREEN_MENU;
   game->is_running = true;
-  game->has_saved_game = false;
+  game->session_is_run = false;
 }
 
 void game_set_screen(ScreenType screen) {
@@ -32,15 +32,15 @@ bool game_is_running() {
 }
 
 void game_start_new() {
-  game->has_saved_game = true;
+  game->session_is_run = true;
 }
 
 void game_end_session() {
-  game->has_saved_game = false;
+  game->session_is_run = false;
 }
 
-bool game_has_saved_game() {
-  return game->has_saved_game;
+bool game_session_is_run() {
+  return game->session_is_run;
 }
 
 void game_free() {

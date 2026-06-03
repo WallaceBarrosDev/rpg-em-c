@@ -5,11 +5,14 @@
 
 #include "game.h"
 #include "input.h"
+#include "render.h"
 
 void update();
 
 void process_command(const char *command);
 
 void update_menu(int value);
+void update_pause_menu(int value);
+void update_dungeon(int value);
 
 #endif
