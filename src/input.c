@@ -1,4 +1,4 @@
-#include "get_input.h"
+#include "input.h"
 
 InputData inputData = {-1, "", false};
 
@@ -26,11 +26,13 @@ void input() {
     if(*temp == '\0') {
       result.is_number = true;
       inputData = result;
+      break;
     }
 
     // Se não é número, retorna como comando textual
     // O caller decide o que fazer com comandos como "menu"
     inputData = result;
+    break;
   }
 }
 
