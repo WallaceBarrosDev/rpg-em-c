@@ -1,6 +1,8 @@
 #include "get_input.h"
 
-InputData get_input() {
+InputData inputData = {-1, "", false};
+
+void input() {
   char input[254];
   char *temp;
   InputData result;
@@ -23,11 +25,15 @@ InputData get_input() {
     // Se converteu completamente, é um número
     if(*temp == '\0') {
       result.is_number = true;
-      return result;
+      inputData = result;
     }
 
     // Se não é número, retorna como comando textual
     // O caller decide o que fazer com comandos como "menu"
-    return result;
+    inputData = result;
   }
+}
+
+InputData get_input() {
+  return inputData;
 }

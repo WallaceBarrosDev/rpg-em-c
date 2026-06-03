@@ -14,6 +14,7 @@ typedef struct {
 } InputData;
 
 // Obtém o input do usuário sem alterar estado do jogo
+void input();
 InputData get_input();
 
 #endif
