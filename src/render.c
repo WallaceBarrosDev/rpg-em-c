@@ -36,14 +36,16 @@ void render_pause_menu() {
   printf("1. Continuar jogo\n2. Finalizar jogo\n");
 };
 
-void render_combat() {
-  printf("Combate\n");
-}
-
 void render_dungeon() {
   printf("Dungeon\n");
   printf("Selecione uma opção:\n");
   printf("1. explorar.\n2. sair.\n");
+}
+
+void render_combat() {
+  printf("Combate\n");
+  printf("Selecione uma opção:\n");
+  printf("1. Atacar.\n2. Curar.\n3. Fugir do combate.\n");
 }
 
 void render_invalide_option() {

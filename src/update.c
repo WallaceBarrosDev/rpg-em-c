@@ -1,5 +1,9 @@
 #include "update.h"
+#include "combat.h"
+#include "entities.h"
+#include "entity.h"
 #include "game.h"
+#include "player.h"
 #include "render.h"
 #include <strings.h>
 
@@ -25,7 +29,7 @@ void update() {
       break;
 
     case SCREEN_COMBAT:
-      // TODO: Implementar lógica de combate
+      update_combat(inputData.value);
       break;
   }
 
@@ -60,7 +64,6 @@ void update_menu(int value) {
 
     default:
       render_invalide_option();
-      break;
   }
 }
 
@@ -75,6 +78,9 @@ void update_pause_menu(int value) {
       game_end();
       render_end_game();
       break;
+
+    default:
+      render_invalide_option();
   }
 }
 
@@ -90,6 +96,31 @@ void update_dungeon(int value) {
 
     default:
       render_invalide_option();
+  }
+}
+
+void update_combat(int value) {
+  if(listEntities_is_null()) {
+    Entity zombie = {"zombie", 60, 5};
+    
+    listEntities_creates(1);
+    listEntities_add(zombie);
+  }  
+
+  switch (value) {
+    case 1:
+      player_attack(listEntities_get_entity(0));
       break;
+
+    case 2:
+      //TODO Curar
+      break;
+
+    case 3:
+      //TODO fugir
+      break;
+
+    default:
+      render_invalide_option();
   }
 }

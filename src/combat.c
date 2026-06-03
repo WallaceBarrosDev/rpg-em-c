@@ -4,12 +4,12 @@
 Entities *enimies = NULL;
 bool combat_running = false;
 
-void init_combat(Entities *new_enimies) {
+void combat_init(Entities *new_enimies) {
   enimies = new_enimies;
   combat_running = true;
 };
 
-void end_combat() {
+void combat_end() {
   destroy_entities(enimies);
   combat_running = false;
   game_set_screen(SCREEN_MENU);
@@ -20,15 +20,15 @@ bool combat_is_running() {
   return combat_running;
 }
 
-void show_enimies() { 
+void combat_show_enimies() { 
   show_entities(enimies);
 }
 
-void next_turn() {
+void combat_next_turn() {
   player_attack(&enimies->entitys[0]);
   if(!player_is_alive()) {
     printf("fim do combate, Você morreu.\n");
-    end_combat();
+    combat_end();
     return;
   }
 
@@ -41,7 +41,7 @@ void next_turn() {
 
       if(enimies->size == 0) {
         printf("fim do combate, Você venceu.\n");
-        end_combat();
+        combat_end();
         return;
       }
     }

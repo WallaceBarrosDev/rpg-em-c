@@ -7,10 +7,19 @@
 #include "player.h"
 #include "entity.h"
 
-void init_combat(Entities *new_entities);
-void end_combat();
-void show_enimies();
+// Inicia um novo combate
+void combat_init(Entities *new_entities);
+
+// Finaliza o combate
+void combat_end();
+
+// Mostar todos os inimigos que estão no combate
+void comabt_show_enimies();
+
+// Verifica se o combate esta acontecendo
 bool combat_is_running();
-void next_turn();
+
+// Pula para o proximo turno
+void combat_next_turn();
 
 #endif

@@ -11,19 +11,7 @@ typedef struct {
   int strength;
 } Entity;
 
-Entity *create_entity(char *name, int life, int strength);
-void destroy_entity(Entity *entity);
-
-typedef struct {
-  Entity *entitys;
-  int size;
-  int max_size;
-} Entities;
-
-Entities *create_entities(int max_size);
-void destroy_entities(Entities *entities);
-void add_new_entity(Entities *entities, Entity *entity);
-
-void show_entities(Entities *entities);
+Entity *entity_create(char *name, int life, int strength);
+void entity_destory(Entity *entity);
 
 #endif
