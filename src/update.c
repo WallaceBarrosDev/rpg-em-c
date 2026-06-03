@@ -1,5 +1,4 @@
 #include "update.h"
-#include "combat.h"
 #include "entities.h"
 #include "entity.h"
 #include "game.h"

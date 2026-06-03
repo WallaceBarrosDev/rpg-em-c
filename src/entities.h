@@ -1,8 +1,8 @@
 #ifndef ENTITIES_H
 #define ENTITIES_H
 
-#import "entity.h"
-#import "stdbool.h"
+#include "entity.h"
+#include "stdbool.h"
 
 typedef struct {
   Entity *entityes;

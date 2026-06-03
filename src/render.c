@@ -34,7 +34,7 @@ void render_pause_menu() {
   printf("Jogo pausado\n");
   printf("Selecione uma opção:\n");
   printf("1. Continuar jogo\n2. Finalizar jogo\n");
-};
+}
 
 void render_dungeon() {
   printf("Dungeon\n");
